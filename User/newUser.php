@@ -1,9 +1,6 @@
 <?php
-session_start();
-include("./dataBase.php");
+    include "../dataBase.php"
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,23 +14,23 @@ include("./dataBase.php");
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/newUser.css">
 </head>
 
 <body>
     <header>
         <div class="nav-left">
-            <a href="index.php"> <img class="logo" src="img/logo.png" alt="logo"> </a>
+            <a href="../index.php"> <img class="logo" src="../img/logo.png" alt="logo"> </a>
         </div> <!-- end of nav-left -->
         <div class="nav-right">
             <ul class="nav-items">
-                <a href="./Admin/adminLogin.php">
+                <a href="../Admin/adminLogin.php">
                     <li>ADMIN</li>
                 </a>
                 <a href="">
                     <li>CONTACT</li>
                 </a>
-                <a href="#footer">
+                <a href="">
                     <li>FOOTER</li>
                 </a>
 
@@ -44,40 +41,45 @@ include("./dataBase.php");
     </header> <!-- end of header -->
 
     <main>
-        <?php
-        if (isset($_POST["submit"])) {
-            $sql = "SELECT * FROM student WHERE NAME = '{$_POST["name"]}' AND PASS = '{$_POST["pass"]}'";
-            $result = $db->query($sql);
-            if ($result -> num_rows > 0){
-                $row = $result->fetch_assoc();
-                $_SESSION["id"] = $row["ID"];
-                $_SESSION["name"] = $row["NAME"];
-                header("location: ./User/userHome.php");
-                
-
-            }
-             
-               
-        }
-        ?>
         <div class="login-form">
-            <form action="index.php" method="post">
-                <h1> User Login</h1>
-                <input type="text" class="input-box" name="name" placeholder="Username" required>
+            <?php
+                if (isset($_POST["submit"])){
+                    $sql = "INSERT INTO student (NAME,PASS,MAIL,DEP) VALUES ('{$_P0ST["name"]}','{$_POST["pass"]}','{$_POST["mail"]}','{$_POST["dept"]}')";
+                    $db->query($sql);
+                    // echo "<h3>Successfully Registered</h3>";
+                    echo "<script type='text/javascript'>
+                        alert('Successfully Registered');
+                         window.location.href='../index.php';
+                    </script>";
+                    
+                } 
+            ?>
+            <form action= "<?php echo $_SERVER["PHP_SELF"]; ?> " method="POST">
+                <h1> New User</h1>
+                <input type="text" class="input-box" name="name" placeholder="Username" required> 
 
-                <input type="password" class="input-box" placeholder="Password" name="pass" required>
+                <input type="email" placeholder="Email" name="mail" class="input-box"  required>
 
 
-                <button type="submit" name="submit"> Login </button>
+                <label  class="department">Department</label>
+                <select name="dept"  required>
+                    <option  value="" ></option>
+                    <option  value="CSE">CSE</option>
+                    <option  value="CIVIL">CIVIL</option>
+                    <option  value="ECE">ECE</option>
+                    <option  value="MECH">MECH</option>
+                    <option  value="MBA">MBA</option>
+                   </select>
 
-                <a href="User/newUser.php">Get a free account</a>
+                <input type="password" class="input-box" placeholder="Password" name="pass" required> 
+                <button type="submit" name="submit"> Register </button>
 
+                 
 
             </form>
         </div>
 
     </main> <!-- end of main -->
-
     <div class="footer-basic">
         <footer id="footer">
             <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
@@ -90,13 +92,6 @@ include("./dataBase.php");
             </ul>
             <p class="copyright">NOT NULL © 2022</p>
         </footer>
-    </div>
-
-
-
-
+    </div> <!-- end of footer-basic -->
 </body>
-
-
-
 </html>
