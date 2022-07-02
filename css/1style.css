@@ -1,0 +1,110 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: 90% calibri, sans-serif;
+    text-align: center;
+}
+
+div#header {
+    background-color: blueviolet;
+}
+
+div#header {
+    height: 80px;
+    line-height: 80px;
+    margin: 0%;
+    padding-left: 10px;
+    align-items: left;
+}
+
+div#container {
+    height: auto;
+    width: 700px;
+    margin: 0 auto;
+}
+
+div#wrapper {
+    float: right;
+    width: 500px;
+}
+
+div#wrapper p {
+    line-height: 1.4;
+    text-align: left;
+}
+
+div#navi {
+    float: left;
+    height: 500px;
+    background-color: black;
+    color: aliceblue;
+    width: 150px;
+    ;
+}
+
+div#navi {
+    margin: left 10px;
+    list-style-type: square;
+}
+
+div#navi li {
+    margin-bottom: 5px;
+}
+
+div#footer {
+    clear: both;
+    width: 100%;
+    background-color: lightgreen;
+}
+
+div#footer p {
+    margin: 0;
+    padding: 5px 10px;
+}
+
+a {
+    padding: 5px;
+    text-decoration: none;
+}
+
+a:hover {
+    color: bisque;
+}
+
+p {
+    margin: 0 10px 10 px;
+}
+
+#heading {
+    text-align: center;
+}
+
+label,
+input,
+button,
+select,
+textarea {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+input,
+select,
+textarea {
+    height: 100%;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+
+.succses {
+    color: green;
+    text-align: center;
+}

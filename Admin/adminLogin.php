@@ -1,10 +1,11 @@
 <?php
-session_start();
-include("./dataBase.php");
+    session_start();
+    include "../dataBase.php";
 ?>
 
 
 
+<!-- Database connect -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,17 +18,17 @@ include("./dataBase.php");
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/adminLogin.css">
 </head>
 
 <body>
     <header>
         <div class="nav-left">
-            <a href="index.php"> <img class="logo" src="img/logo.png" alt="logo"> </a>
+            <a href="../index.php"> <img class="logo" src="../img/logo.png" alt="logo"> </a>
         </div> <!-- end of nav-left -->
         <div class="nav-right">
             <ul class="nav-items">
-                <a href="./Admin/adminLogin.php">
+                <a href="../Admin/adminLogin.php">
                     <li>ADMIN</li>
                 </a>
                 <a href="">
@@ -44,34 +45,27 @@ include("./dataBase.php");
     </header> <!-- end of header -->
 
     <main>
-        <?php
-        if (isset($_POST["submit"])) {
-            $sql = "SELECT * FROM student WHERE NAME = '{$_POST["name"]}' AND PASS = '{$_POST["pass"]}'";
-            $result = $db->query($sql);
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $_SESSION["id"] = $row["ID"];
-                $_SESSION["name"] = $row["NAME"];
-                header("location: ./User/userHome.php");
-            } else {
-                echo '<script type="text/JavaScript"> 
-                              alert("Invalid Name or Password");
-                              </script>';
-            }
-        }
-        ?>
         <div class="login-form">
-            <form action="index.php" method="post">
-                <h1> User Login</h1>
-                <input type="text" class="input-box" name="name" placeholder="Username" required>
+            <?php 
+                if(isset($_POST["submit"])){
+                    $sql = " SELECT * FROM admin WHERE ANAME = '{$_POST["adminName"]}' AND APASS='{$_POST["adminPass"]}'";
+                    $result = $db -> query($sql);
+                    if($result -> num_rows > 0){
+                        header("location: ../Admin/adminHome.php");
+                    }else{
+                        echo '<script type="text/JavaScript"> 
+                             alert("Invalid Admin Name or Password");
+                             </script>';
+                    }
+                }
+            
+            ?>
+            <form action="adminLogin.php" method="post">
+                <h1> Admin Login</h1>
+                <input type="text" class="input-box"  name="adminName"  placeholder="Admin name" required>
 
-                <input type="password" class="input-box" placeholder="Password" name="pass" required>
-
-
-                <button type="submit" name="submit"> Login </button>
-
-                <a href="User/newUser.php">Get a free account</a>
-
+                <input type="password" class="input-box" name="adminPass" placeholder="Password" required>
+                <button name="submit" type="submit"> Login </button>
 
             </form>
         </div>
@@ -96,7 +90,6 @@ include("./dataBase.php");
 
 
 </body>
-
-
+ 
 
 </html>
