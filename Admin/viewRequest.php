@@ -1,6 +1,18 @@
 <?php
-include "../dataBase.php"
+include "../dataBase.php";
+
+function countRecord($sql, $db)
+{
+    $result = $db->query($sql);
+    return $result->num_rows;
+}
+// if(isset($_SESSION["AID"]))
+//  {
+//      header("location:alogin.php");
+//  }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,8 +34,6 @@ include "../dataBase.php"
         body {
             font-family: 'Roboto', sans-serif;
             background: #1e1e1e;
-            width: 100%;
-            height: 100vh;
         }
 
         header {
@@ -64,8 +74,6 @@ include "../dataBase.php"
             font-size: 1.3rem;
             list-style: none;
             font-weight: 600;
-            position: absolute;
-             
         }
 
         ul a {
@@ -73,44 +81,86 @@ include "../dataBase.php"
             color: #000;
         }
 
-        .main-container {
+        /* Header finish */
+
+        main {
             width: 100%;
             height: 100vh;
-            background-color:#6CC4A1;
+            background-color: #EA8C48;
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             align-items: center;
-             
 
+
+        }
+
+        .main-container {
+            width: 45%;
+            height: 60vh;
+            margin: auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 5px #fff;
+            margin-top: 15rem;
+            align-items: center;
+        }
+
+        .sub-container h1 {
+            width: 100%;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: red;
+            margin-top: 1rem;
+            text-decoration: underline;
+            margin-top: 2rem;
+        }
+
+        .form-container {
+
+            padding-left: 15rem;
+        }
+
+        .input-box {
+
+            width: 50%;
+            height: 2.5rem;
+            border: 1px solid #ccc;
+            padding-left: 0.7rem;
+            outline: none;
+            border-style: hidden;
+            border-bottom: 2px solid #000;
+            font-size: 1.2rem;
+            margin-top: 2rem;
+            margin-left: 0.3rem;
+        }
+
+        .input-box:focus {
+            border-bottom: 2px solid #EA8C48;
 
         }
 
         button {
-            width: 100%;
-            height: 40vh;
-            cursor: pointer;
+            width: 50%;
+            height: 2.5rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 0.2rem;
+            outline: none;
             background-color: #EA8C48;
-            border-radius: 9%;
-            border: none;
-            box-shadow: 0 0 4px  1px #000;
-            margin:1rem;
-            
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.5s;
+            margin-top: 2.6rem;
         }
 
         button:hover {
-
-            color: #EA8C48
-        }
-
-        button h1 {
-            text-decoration: none;
+            background-color: #fff;
             color: #000;
-            font-size: 3rem;
-            font-weight: 600;
-
+            border: 1px solid #000;
         }
-
-
 
 
 
@@ -118,8 +168,6 @@ include "../dataBase.php"
             padding: 40px 0;
             background-color: #fff;
             color: #4b4c4d;
-            /* position: absolute; */
-            /* bottom: 0; */
         }
 
         .footer-basic ul {
@@ -175,16 +223,23 @@ include "../dataBase.php"
             color: #aaa;
             margin-bottom: 0;
         }
+        table{
+            width: 90%;
+            height: 10vh;
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 1px solid #ddd;
+            text-align: center;
+            margin:2rem;
+             
+            border: 1px solid black;
+        }
+
     </style> <!-- end of style -->
 
 
 
 </head>
-
-
-
-
-
 
 <body>
     <header>
@@ -193,8 +248,15 @@ include "../dataBase.php"
         </div> <!-- end of nav-left -->
         <div class="nav-right">
             <ul class="nav-items">
-
-
+                <a href="./adminHome.php">
+                    <li>DATABASE</li>
+                </a>
+                <a href="./viewStudentDetails.php">
+                    <li>STUDENT DETAILS</li>
+                </a>
+                <a href="./uploadBooks.php">
+                    <li>UPLOAD BOOK</li>
+                </a>
                 <a href="../index.php">
                     <li>LOG OUT</li>
                 </a>
@@ -208,37 +270,49 @@ include "../dataBase.php"
     <main>
 
         <div class="main-container">
+            <div class="sub-container">
+                <h1>Requested Book</h1>
+                <?php
+                $sql = "SELECT student.NAME,request.MES,request. LOGS from student inner join request on student.ID=request.ID";
+                $result = $db->query($sql);
+                if ($result->num_rows > 0) {
+                    echo "<table border='1'> 
+                            <tr>
+                                <th>sno</th>
+                                <th>name</th>
+                                <th>message</th>
+                                <th>logs</th>
+                    
+                            </tr>  ";
+                    $i = 0;
+                    while ($row = $result->fetch_assoc()) {
+                        $i++;
+                        echo "<tr>";
+                        echo "<td>{$i}</td>";
+                        echo "<td> {$row["NAME"]}</td>";
+                        echo "<td>  {$row["MES"]}</td>";
+                        echo "<td>  {$row["LOGS"]}</td>";
+                        echo "</tr>";
+                    }
+                    echo "</table>";
+                } else {
+                    echo "<p class='error'>no request found</p>";
+                }
+                ?>
+            </div>
+            <div class="form-container">
+               
 
 
-            <a href="../requestBook.php">
-                <button>
-                    <h1>Request Book</h1>
-                </button>
-            </a>
-            <a href="../bookSearch.php">
-                <button>
-                    <h1>Search Book</h1>
-                </button>
-            </a>
+
+
+            </div>
+
+
         </div>
 
 
-
-
-
     </main> <!-- end of main -->
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div class="footer-basic">
         <footer id="footer">

@@ -1,6 +1,16 @@
-<?php
-include "../dataBase.php"
+<?php 
+     include "../dataBase.php";
+    session_start();
+    function countRecord($sql, $db){
+    $res = $db->query($sql);
+    return $res->num_rows;
+}
+if(isset($_SESSION["AID"]))
+ {
+     header("location:alogin.php");
+ }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +22,7 @@ include "../dataBase.php"
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
-    <style>
+    <style>   
         * {
             padding: 0;
             margin: 0;
@@ -22,8 +32,6 @@ include "../dataBase.php"
         body {
             font-family: 'Roboto', sans-serif;
             background: #1e1e1e;
-            width: 100%;
-            height: 100vh;
         }
 
         header {
@@ -64,8 +72,6 @@ include "../dataBase.php"
             font-size: 1.3rem;
             list-style: none;
             font-weight: 600;
-            position: absolute;
-             
         }
 
         ul a {
@@ -73,53 +79,44 @@ include "../dataBase.php"
             color: #000;
         }
 
-        .main-container {
+        /* Header finish */
+
+        main {
             width: 100%;
             height: 100vh;
-            background-color:#6CC4A1;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-             
-
-
-        }
-
-        button {
-            width: 100%;
-            height: 40vh;
-            cursor: pointer;
             background-color: #EA8C48;
-            border-radius: 9%;
-            border: none;
-            box-shadow: 0 0 4px  1px #000;
-            margin:1rem;
-            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
         }
 
-        button:hover {
-
-            color: #EA8C48
+        .main-container{
+            width: 45%;
+            height: 60vh;
+            margin: auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 5px #fff;
+            margin-top: 15rem;
         }
-
-        button h1 {
-            text-decoration: none;
-            color: #000;
-            font-size: 3rem;
+        .sub-container h1 {
+            text-align: center;
+            font-size: 2.5rem;
             font-weight: 600;
-
+            margin-bottom: 2rem;
+            color: red;
+            margin-top: 1rem;
+            text-decoration: underline;
+            margin-top: 2rem;
         }
 
-
-
-
-
+         
         .footer-basic {
             padding: 40px 0;
             background-color: #fff;
             color: #4b4c4d;
-            /* position: absolute; */
-            /* bottom: 0; */
         }
 
         .footer-basic ul {
@@ -175,16 +172,26 @@ include "../dataBase.php"
             color: #aaa;
             margin-bottom: 0;
         }
-    </style> <!-- end of style -->
+        table{
+            width: 90%;
+            height: 10vh;
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 1px solid #ddd;
+            text-align: center;
+            margin:2rem;
+             
+            border: 1px solid black;
+        }
+
+
+
+
+    </style>  <!-- end of style -->
 
 
 
 </head>
-
-
-
-
-
 
 <body>
     <header>
@@ -193,8 +200,15 @@ include "../dataBase.php"
         </div> <!-- end of nav-left -->
         <div class="nav-right">
             <ul class="nav-items">
-
-
+                <a href="./adminHome.php">
+                    <li>DATABASE</li>
+                </a>
+                <a href="./uploadBooks.php">
+                    <li>Upload Books</li>
+                </a>
+                <a href="./viewRequest.php">
+                    <li>View Request</li>
+                </a>
                 <a href="../index.php">
                     <li>LOG OUT</li>
                 </a>
@@ -207,38 +221,48 @@ include "../dataBase.php"
 
     <main>
 
-        <div class="main-container">
-
-
-            <a href="../requestBook.php">
-                <button>
-                    <h1>Request Book</h1>
-                </button>
-            </a>
-            <a href="../bookSearch.php">
-                <button>
-                    <h1>Search Book</h1>
-                </button>
-            </a>
+    <div class="main-container">
+        <div class="sub-container">
+            <h1>Student Details</h1>
         </div>
 
+        <?php
+            $sql = "SELECT * FROM student";
+            $res = $db->query($sql);
+            if ($res->num_rows > 0) {
+                echo "<table border='1'> 
+                        <tr>
+                            <th>SNO</th>
+                            <th>NAME</th>
+                            <th>EMAIL</th>
+                            <th>DEPARTMENT</th>
+
+                        </tr>  "; 
+                        $i=0;
+                        while($row=$res->fetch_assoc())
+                        {
+                          $i++;
+                          echo "<tr>";
+                          echo "<td>{$i}</td>";
+                          echo "<td> {$row["NAME"]}</td>";
+                          echo "<td>  {$row["MAIL"]}</td>";
+                          echo "<td>  {$row["DEP"]}</td>";
+                          echo "</tr>";   
+                        }
+                         echo "</table>";
+
+    
+            } else {
+                echo "<p class='error'>no student records found</p>";
+            }
+            ?>
 
 
-
+        
+    </div>
+        
 
     </main> <!-- end of main -->
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div class="footer-basic">
         <footer id="footer">
@@ -259,6 +283,6 @@ include "../dataBase.php"
 
 </body>
 
-
+ 
 
 </html>

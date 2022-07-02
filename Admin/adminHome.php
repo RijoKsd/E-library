@@ -200,13 +200,13 @@
         </div> <!-- end of nav-left -->
         <div class="nav-right">
             <ul class="nav-items">
-                <a href="./Admin/adminLogin.php">
+                <a href="./viewStudentDetails.php">
                     <li>View Student</li>
                 </a>
-                <a href="">
+                <a href="./uploadBooks.php">
                     <li>Upload Books</li>
                 </a>
-                <a href="#footer">
+                <a href="./viewRequest.php">
                     <li>View Request</li>
                 </a>
                 <a href="../index.php">
@@ -224,9 +224,10 @@
             <h1>Welcome to Admin page</h1>
 
             <ul class="admin-count">
-                <li>Total Books : <?php  echo countRecord("SELECT * FROM 'book'",$db); ?> </li>
-                <li>Total Students : <?php  echo countRecord("SELECT * FROM 'student'",$db);  ?></li>
-                <li>Total Requests : <?php  echo countRecord("SELECT * FROM 'request'",$db); ?></li>
+                <li>Total Books : <?php  echo countRecord("SELECT * FROM book",$db); ?> </li>
+                <li>Total Students : <?php  echo countRecord("SELECT * FROM student",$db);  ?></li>
+                <li>Total Requests : <?php  echo countRecord("SELECT * FROM request",$db); ?></li>
+           
                  
             </ul> <!-- end of admin-count -->
            
