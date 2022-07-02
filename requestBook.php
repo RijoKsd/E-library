@@ -1,6 +1,10 @@
 <?php
-include "../dataBase.php"
+session_start();
+include("./dataBase.php");
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,7 +66,6 @@ include "../dataBase.php"
             font-size: 1.3rem;
             list-style: none;
             font-weight: 600;
-            position: absolute;
              
         }
 
@@ -71,40 +74,77 @@ include "../dataBase.php"
             color: #000;
         }
 
-        .main-container {
+        /* Header finish */
+
+
+        main {
             width: 100%;
-            height: 100%;
-            background-color:#6CC4A1;
+            height: 100vh;
+            background-color: #EA8C48;
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             align-items: center;
 
 
         }
 
-        button {
+        .main-container {
+            width: 65%;
+            height: 70vh;
+            background-color: #fff;
+            display: flex;
+            /* flex-direction: column; */
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px #000;
+
+
+        }
+
+        .main-sub-container {
             width: 100%;
-            height: 40vh;
-            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-sub-container h2 {
+            font-weight: 600;
+            font-size: 3rem;
+            color: #000;
+            margin-top: -13rem;
+
+        }
+
+        .input-box {
+            margin-top: 5rem;
+            width: 100%;
+            height: 13vh;
+            font-size: 1.9rem;
+            font-weight: 600;
+        }
+
+        button {
+            margin-top: 3rem;
+            width: 100%;
+            height: 5vh;
             background-color: #EA8C48;
-            border-radius: 9%;
             border: none;
-            box-shadow: 0 0 4px  1px #000;
-            margin:1rem;
-            
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: 0.5s;
+            padding: 10px 20px;
         }
 
         button:hover {
-
-            color: #EA8C48
-        }
-
-        button h1 {
-            text-decoration: none;
+            background-color: #fff;
             color: #000;
-            font-size: 3rem;
-            font-weight: 600;
-
+            border: 1px solid #000;
         }
 
 
@@ -170,27 +210,23 @@ include "../dataBase.php"
             color: #aaa;
             margin-bottom: 0;
         }
-    </style> <!-- end of style -->
-
-
+    </style>
 
 </head>
-
-
-
-
-
 
 <body>
     <header>
         <div class="nav-left">
-            <a href="../index.php"> <img class="logo" src="../img/logo.png" alt="logo"> </a>
+            <a href="index.php"> <img class="logo" src="img/logo.png" alt="logo"> </a>
         </div> <!-- end of nav-left -->
         <div class="nav-right">
             <ul class="nav-items">
 
+                <a href="./bookSearch.php">
+                    <li>SEARCH BOOK</li>
+                </a>
 
-                <a href="../index.php">
+                <a href="./index.php">
                     <li>LOG OUT</li>
                 </a>
 
@@ -201,39 +237,37 @@ include "../dataBase.php"
     </header> <!-- end of header -->
 
     <main>
-
         <div class="main-container">
+            <div class="main-sub-container">
+
+                <h2>Request a book</h2>
+                <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+                    <input class="input-box" type="text" name="request" required placeholder="Enter book name">
+                    <button type="submit" name="submit">  Send Request</button>
+                </form>
 
 
-            <a href="../requestBook.php">
-                <button>
-                    <h1>Request Book</h1>
-                </button>
-            </a>
-            <a href="../bookSearch.php">
-                <button>
-                    <h1>Search Book</h1>
-                </button>
-            </a>
+            </div>
+            <?php 
+       
+
+                if (isset($_POST["submit"])) {
+                     
+                    $sql = "INSERT INTO request (ID,MES,LOGS) VALUES ({$_SESSION["ID"]}, '{$_POST["request"]}',now())";
+                    $db->query($sql);
+                    if ($db) {
+                        echo "<script>alert('Request sent successfully')</script>";
+                    } else {
+                        echo "<script>alert('Request not sent')</script>";
+                    }
+                }
+            
+            ?>
+
         </div>
 
 
-
-
-
     </main> <!-- end of main -->
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div class="footer-basic">
         <footer id="footer">

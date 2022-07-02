@@ -1,5 +1,5 @@
 <?php
-    include "../dataBase.php"
+include "../dataBase.php"
 ?>
 
 <!DOCTYPE html>
@@ -43,38 +43,51 @@
     <main>
         <div class="login-form">
             <?php
-                if (isset($_POST["submit"])){
-                    $sql = "INSERT INTO student (NAME,PASS,MAIL,DEP) VALUES ('{$_P0ST["name"]}','{$_POST["pass"]}','{$_POST["mail"]}','{$_POST["dept"]}')";
-                    $db->query($sql);
-                    // echo "<h3>Successfully Registered</h3>";
-                    echo "<script type='text/javascript'>
-                        alert('Successfully Registered');
-                         window.location.href='../index.php';
-                    </script>";
-                    
-                } 
+            // if (isset($_POST["submit"])){
+            // $sql = "INSERT INTO student( NAME, PASS,MAIL,DEP) VALUES ('{$_P0ST["name"]}','{$_POST["pass"]}','{$_POST["mail"]}','{$_POST["dept"]}')";
+            // $db->query($sql);
+
+            // echo
+            //  "<script type='text/javascript'>
+            //     alert('Successfully Registered');
+            //      window.location.href='../index.php';
+            // </script>";
+
+            // } 
+
+            if (isset($_POST["submit"])) {
+                $sql = "insert into student(NAME,PASS,MAIL,DEP) values ('{$_POST["name"]}','{$_POST["pass"]}','{$_POST["mail"]}','{$_POST["dept"]}')";
+                $db->query($sql);
+                echo "<script type='text/javascript'>
+                      alert('Successfully Registered');
+                      window.location.href='../index.php';
+                 </script>";
+            }
+
             ?>
-            <form action= "<?php echo $_SERVER["PHP_SELF"]; ?> " method="POST">
+
+
+            <form action="<?php echo $_SERVER["PHP_SELF"]; ?> " method="POST">
                 <h1> New User</h1>
-                <input type="text" class="input-box" name="name" placeholder="Username" required> 
+                <input type="text" class="input-box" name="name" placeholder="Username" required>
 
-                <input type="email" placeholder="Email" name="mail" class="input-box"  required>
+                <input type="email" placeholder="Email" name="mail" class="input-box" required>
 
 
-                <label  class="department">Department</label>
-                <select name="dept"  required>
-                    <option  value="" ></option>
-                    <option  value="CSE">CSE</option>
-                    <option  value="CIVIL">CIVIL</option>
-                    <option  value="ECE">ECE</option>
-                    <option  value="MECH">MECH</option>
-                    <option  value="MBA">MBA</option>
-                   </select>
+                <label class="department">Department</label>
+                <select name="dept" required>
+                    <option value=""></option>
+                    <option value="cse">CSE</option>
+                    <option value="civil">CIVIL</option>
+                    <option value="ece">ECE</option>
+                    <option value="mech">MECH</option>
+                    <option value="mba">MBA</option>
+                </select>
 
-                <input type="password" class="input-box" placeholder="Password" name="pass" required> 
+                <input type="password" class="input-box" placeholder="Password" name="pass" required>
                 <button type="submit" name="submit"> Register </button>
 
-                 
+
 
             </form>
         </div>
@@ -94,4 +107,5 @@
         </footer>
     </div> <!-- end of footer-basic -->
 </body>
+
 </html>

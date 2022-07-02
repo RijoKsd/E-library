@@ -48,16 +48,16 @@ include("./dataBase.php");
         if (isset($_POST["submit"])) {
             $sql = "SELECT * FROM student WHERE NAME = '{$_POST["name"]}' AND PASS = '{$_POST["pass"]}'";
             $result = $db->query($sql);
-            if ($result -> num_rows > 0){
+            if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $_SESSION["id"] = $row["ID"];
                 $_SESSION["name"] = $row["NAME"];
                 header("location: ./User/userHome.php");
-                
-
+            } else {
+                echo '<script type="text/JavaScript"> 
+                              alert("Invalid Name or Password");
+                              </script>';
             }
-             
-               
         }
         ?>
         <div class="login-form">

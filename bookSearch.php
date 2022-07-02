@@ -1,6 +1,10 @@
 <?php
-include "../dataBase.php"
+session_start();
+  include("./dataBase.php");
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,8 +66,9 @@ include "../dataBase.php"
             font-size: 1.3rem;
             list-style: none;
             font-weight: 600;
-            position: absolute;
-             
+            /* position: absolute; */
+            /* right:-25rem; */
+            /* left: 40%; */
         }
 
         ul a {
@@ -71,40 +76,76 @@ include "../dataBase.php"
             color: #000;
         }
 
-        .main-container {
+        /* Header finish */
+
+
+        main {
             width: 100%;
-            height: 100%;
-            background-color:#6CC4A1;
+            height: 100vh;
+            background-color: #EA8C48;
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             align-items: center;
 
 
         }
 
-        button {
+        .main-container {
+            width: 65%;
+            height: 70vh;
+            background-color: #fff;
+            display: flex;
+            /* flex-direction: column; */
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px #000;
+
+
+        }
+
+        .main-sub-container {
             width: 100%;
-            height: 40vh;
-            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-sub-container h2 {
+            font-weight: 600;
+            font-size: 3rem;
+            color: #000;
+            margin-top: -13rem;
+
+        }
+
+        .input-box {
+            margin-top: 5rem;
+            width: 100%;
+            height: 13vh;
+            font-size: 1.9rem;
+            font-weight: 600;
+        }
+
+        button {
+            margin-top: 3rem;
+            width: 100%;
+            height: 5vh;
             background-color: #EA8C48;
-            border-radius: 9%;
             border: none;
-            box-shadow: 0 0 4px  1px #000;
-            margin:1rem;
-            
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: 0.5s;
         }
 
         button:hover {
-
-            color: #EA8C48
-        }
-
-        button h1 {
-            text-decoration: none;
+            background-color: #fff;
             color: #000;
-            font-size: 3rem;
-            font-weight: 600;
-
+            border: 1px solid #000;
         }
 
 
@@ -170,27 +211,44 @@ include "../dataBase.php"
             color: #aaa;
             margin-bottom: 0;
         }
-    </style> <!-- end of style -->
-
-
+        table{
+            width: 90%;
+            height: 10vh;
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 1px solid #ddd;
+            text-align: center;
+            margin-right: 5rem;
+            margin-top: 25rem;
+            margin-left: -55rem;
+            border: 1px solid black;
+        }
+        .error{
+            color: red;
+            font-size: 1.5rem;
+            margin-left: 5rem;
+            margin-right: 10rem;
+            
+            font-weight: 600;
+            
+        }
+       
+    </style>
 
 </head>
-
-
-
-
-
 
 <body>
     <header>
         <div class="nav-left">
-            <a href="../index.php"> <img class="logo" src="../img/logo.png" alt="logo"> </a>
+            <a href="index.php"> <img class="logo" src="img/logo.png" alt="logo"> </a>
         </div> <!-- end of nav-left -->
         <div class="nav-right">
             <ul class="nav-items">
+                <a href="./requestBook.php">
+                    <li>REQUEST BOOK</li>
+                </a>
 
-
-                <a href="../index.php">
+                <a href="./index.php">
                     <li>LOG OUT</li>
                 </a>
 
@@ -201,39 +259,51 @@ include "../dataBase.php"
     </header> <!-- end of header -->
 
     <main>
-
         <div class="main-container">
+            <div class="main-sub-container">
+
+                <h2>Search a book</h2>
+                <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+                    <input class="input-box" type="text" name="search" required placeholder="Enter book name or keywords">
+                    <button type="submit" name="submit"> Search</button>
+                </form>
 
 
-            <a href="../requestBook.php">
-                <button>
-                    <h1>Request Book</h1>
-                </button>
-            </a>
-            <a href="../bookSearch.php">
-                <button>
-                    <h1>Search Book</h1>
-                </button>
-            </a>
+            </div>
+            <?php
+            if (isset($_POST['submit'])) {
+                $sql  = "SELECT * FROM book WHERE BTITLE LIKE '%{$_POST["search"]}%' or KEYWORDS LIKE '%{$_POST["search"]}%'";
+                $result = $db->query($sql);
+                if ($result->num_rows > 0) {
+                    echo " <table border = '2'>
+                        <tr>
+                             <th>BID</th>
+                            <th>BTITLE</th>
+                            <th>KEYWORDS</th>
+                            <th>FILE</th>
+                        </tr>";
+                    $i = 0;
+                    while ($row = $result->fetch_assoc()) {
+                        $i++;
+                        echo " <tr>";
+                        echo " <td>{$i}</td>";
+                        echo " <td> {$row["BTITLE"]}</td>";
+                        echo " <td> {$row["KEYWORDS"]}</td>";
+                        echo " <td> <a href='{$row["FILE"]}' target = '_blank '>view </a> </td>";
+                        echo "</tr>";
+                    }
+                    echo "</table>";
+                } else {
+                    echo "<p class='error'>No Record found</p>";
+                }
+            }
+
+            ?>
+
         </div>
 
 
-
-
-
     </main> <!-- end of main -->
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div class="footer-basic">
         <footer id="footer">
