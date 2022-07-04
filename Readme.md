@@ -14,6 +14,13 @@
     Search in any browser as 'localhost/your_project_name/index.php' 
     and you will see the main page of the project.
 
+    If you hava any doubt about this project please contact us.
+    
+    https://rijoksd.github.io/portfolio
+    https://www.instagram.com/rijo_ksd
+    https://www.instagram.com/abijith_gabriel/
+
+
     Thank You 
 
 
