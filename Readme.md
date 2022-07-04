@@ -18,7 +18,7 @@
     
     https://rijoksd.github.io/portfolio
     https://www.instagram.com/rijo_ksd
-    https://www.instagram.com/abijith_gabriel/
+    https://www.instagram.com/abijith_gabriel
 
 
     Thank You 
