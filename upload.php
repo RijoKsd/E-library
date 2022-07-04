@@ -1,10 +1,11 @@
+ 
 <?php
 session_start();
-include "database.php";
-if(isset($_SESSION["AID"]))
- {
+include "dataBase.php";
+ if(isset($_SESSION["AID"]))
+  {
      header("location:alogin.php");
- }
+  }
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +18,11 @@ if(isset($_SESSION["AID"]))
     <title>E-lib</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+<style>
+    body{
+        background-color: grey;
+    }
+</style>
 
 <body>
     <div id="container">
@@ -40,7 +46,7 @@ if(isset($_SESSION["AID"]))
             }
             else
             {
-                echo "<p class='error'> ";
+                echo "<p class='error'> you messed</p>";
             }
             }
          ?>
@@ -58,11 +64,8 @@ if(isset($_SESSION["AID"]))
                 </form>
             
         </div>
-        <div id="navi">
-            <?php
-            include "adminsidebar.php"
-            ?>
-        </div>
+        
+            
         <div id="footer">
             <p>copyright &copy;NOT NULL</p>
         </div>
